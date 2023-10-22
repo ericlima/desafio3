@@ -1,0 +1,15 @@
+### CreateOrder
+POST http://localhost:8000/order HTTP/1.1
+Host: localhost:8000
+Content-Type: application/json
+
+{
+    "id":"mjeehedfgsdf",
+    "price": 90.5,
+    "tax": 0.5
+}
+
+### ListOrder
+GET http://localhost:8000/order HTTP/1.1
+Host: localhost:8000
+Content-Type: application/json
