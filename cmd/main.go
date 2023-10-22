@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"database/sql"
 	"desafio3/internal/config"
 	"desafio3/internal/event/handler"
@@ -34,6 +35,11 @@ func main() {
 		panic(err)
 	}
 	defer db.Close()
+	
+	if !tableExists(db, "orders") {
+        // Se a tabela não existir, crie-a
+        createTableOrders(db)
+    }
 
 	rabbitMQChannel := getRabbitMQChannel(config.AmpqChannelDial)
 
@@ -85,4 +91,30 @@ func getRabbitMQChannel(dial string) *amqp.Channel {
 		panic(err)
 	}
 	return ch
+}
+
+func tableExists(db *sql.DB, tableName string) bool {
+    query := fmt.Sprintf("SHOW TABLES LIKE '%s'", tableName)
+    rows, err := db.Query(query)
+    if err != nil {
+        panic(err)
+    }
+    defer rows.Close()
+
+    return rows.Next()
+}
+
+func createTableOrders(db *sql.DB) {
+    query := `
+        CREATE TABLE orders (
+            id varchar(100),
+            price decimal(18,2),
+			tax decimal(18,2),
+			final_price decimal(18,2)
+        )
+    `
+    _, err := db.Exec(query)
+    if err != nil {
+        panic(err)
+    }
 }
