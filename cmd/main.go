@@ -1,7 +1,6 @@
 package main
 
 import (
-	"context"
 	"database/sql"
 	"desafio3/internal/config"
 	"desafio3/internal/event/handler"
