@@ -10,3 +10,6 @@ execute
  para testar com o evans:
  cd tests
  evans --proto ./orders.proto repl
+
+
+ go run github.com/99designs/gqlgen generate

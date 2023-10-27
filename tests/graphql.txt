@@ -1,0 +1,18 @@
+query orders {
+  listOrders {
+    id
+    Price
+    Tax
+    FinalPrice
+  }
+}
+
+mutation insert {
+  createOrder(input: {
+    id: "dddddddddd",
+    Price: 20,
+    Tax: 1
+  }) {
+    id
+  }
+}
